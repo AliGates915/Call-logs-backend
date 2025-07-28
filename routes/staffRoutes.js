@@ -1,5 +1,6 @@
 import express from "express";
-import multer from "multer";
+import multer from 'multer';
+import { storage } from '../config/cloudinary.js';
 import {
   addStaff,
   getAllStaff,
@@ -9,7 +10,7 @@ import {
 } from "../controllers/staffController.js";
 
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage });
 
 router.post("/", upload.single("image"), addStaff);
 router.get("/", getAllStaff);

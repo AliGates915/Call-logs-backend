@@ -1,5 +1,6 @@
 import express from "express";
 import multer from 'multer';
+import { storage } from '../config/cloudinary.js';
 import { 
   addProduct, 
   getAllProducts, 
@@ -13,7 +14,7 @@ import {
 const router = express.Router();
 
 // Configure multer for file uploads
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage });
 
 // Product routes
 router.post("/", upload.array('image', 1), addProduct); // Allow image
