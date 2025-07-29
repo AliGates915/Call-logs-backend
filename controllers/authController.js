@@ -4,23 +4,25 @@ import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
     try {
-        const { name, username, email, password } = req.body;
+        const { name, username, email, password, role } = req.body;
     
         const userExists = await User.findOne({ email });
         if (userExists)
           return res.status(400).json({ message: "User already exists" });
 
-    
         const hashedPassword = await bcrypt.hash(password, 10);
     
-        // Always set role to "user" regardless of what is sent in the request
+        // Set role and isAdmin based on request body
+        const userRole = role === 'admin' ? 'admin' : 'user';
+        const isAdmin = role === 'admin';
+    
         const newUser = new User({
           name,
           username,
           email,
           password: hashedPassword,
-          role: 'user',
-          isAdmin: false,
+          role: userRole,
+          isAdmin: isAdmin,
           status: 'pending' // or 'active' if you want to auto-activate
         });
     

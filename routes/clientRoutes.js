@@ -7,12 +7,13 @@ import {
   deleteClient
 } from '../controllers/clientController.js';
 
+import { requireAdmin } from '../config/middleware.js';
 const router = express.Router();
 
-router.post('/', createClient);
+router.post('/', requireAdmin, createClient);
 router.get('/', getAllClients);
-router.get('/:id', getClientById);
-router.put('/:id', updateClient);
-router.delete('/:id', deleteClient);
+router.get('/:id', requireAdmin, getClientById);
+router.put('/:id', requireAdmin, updateClient);
+router.delete('/:id', requireAdmin, deleteClient);
 
 export default router;
