@@ -9,15 +9,15 @@ import {
   deleteStaff,
 } from "../controllers/staffController.js";
 
-import { requireAdmin } from '../config/middleware.js';
+import {authenticate, requireAdmin } from '../config/middleware.js';
 
 const router = express.Router();
 const upload = multer({ storage });
 
-router.post("/", requireAdmin, upload.single("image"), addStaff);
+router.post("/", authenticate, requireAdmin, upload.single("image"), addStaff);
 router.get("/", getAllStaff);
 router.get("/:id", getStaffById);
-router.put("/:id", requireAdmin, upload.single("image"), updateStaff);
+router.put("/:id", authenticate, requireAdmin, upload.single("image"), updateStaff);
 router.delete("/:id", requireAdmin, deleteStaff);
 
 export default router;
