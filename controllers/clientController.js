@@ -16,6 +16,7 @@ export const createClient = async (req, res) => {
       ...req.body,
       companyLogo,
       persons: req.body.persons ? JSON.parse(req.body.persons) : [],
+      companyWebsite: req.body.companyWebsite, // Explicitly add this line if you want
     });
     const savedClient = await newClient.save();
     res.status(201).json(savedClient);
@@ -65,6 +66,7 @@ export const updateClient = async (req, res) => {
     const updateData = {
       ...req.body,
       companyLogo,
+      companyWebsite: req.body.companyWebsite, // Explicitly add this line if you want
     };
 
     if (req.body.persons) {

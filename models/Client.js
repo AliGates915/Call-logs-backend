@@ -7,6 +7,7 @@ const clientSchema = new mongoose.Schema({
     url: String,
     public_id: String,
   },
+  companyWebsite: String,
   address: String,
   city: String,
   mobileNumber: String,
