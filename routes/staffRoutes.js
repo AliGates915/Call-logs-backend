@@ -18,6 +18,6 @@ router.post("/", authenticate, requireAdmin, upload.single("image"), addStaff);
 router.get("/", getAllStaff);
 router.get("/:id", getStaffById);
 router.put("/:id", authenticate, requireAdmin, upload.single("image"), updateStaff);
-router.delete("/:id", requireAdmin, deleteStaff);
+router.delete("/:id", authenticate, requireAdmin, deleteStaff);
 
 export default router;

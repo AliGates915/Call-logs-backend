@@ -1,7 +1,7 @@
 import express from "express";
 import multer from 'multer';
 import { storage } from '../config/cloudinary.js';
-import { requireAdmin } from '../config/middleware.js';
+import {authenticate, requireAdmin } from '../config/middleware.js';
 import { 
   addProduct, 
   getAllProducts, 
@@ -19,10 +19,10 @@ const upload = multer({ storage });
 
 // Product routes
 // Admin only routes (create, update, delete)
-router.post("/", requireAdmin, upload.array('image', 1), addProduct);
-router.put("/:id", requireAdmin, upload.array('image', 1), updateProduct);
-router.delete("/:id", requireAdmin, deleteProduct);
-router.delete("/:productId/images/:publicId", requireAdmin, removeProductImage);
+router.post("/", authenticate, requireAdmin, upload.array('image', 1), addProduct);
+router.put("/:id", authenticate, requireAdmin, upload.array('image', 1), updateProduct);
+router.delete("/:id", authenticate, requireAdmin, deleteProduct);
+router.delete("/:productId/images/:publicId", authenticate, requireAdmin, removeProductImage);
 
 // Routes accessible to active users (read operations)
 router.get("/", getAllProducts);
