@@ -16,8 +16,8 @@ const upload = multer({ storage });
 
 router.post('/', authenticate, requireAdmin, upload.single('companyLogo'), createClient);
 router.get('/', getAllClients);
-router.get('/:id',  getClientById);
 router.get('/assigned', authenticate, requireStaff, getAssignedClients);
+router.get('/:id',  getClientById);
 router.put('/:id', authenticate, requireAdmin, upload.single('companyLogo'), updateClient);
 router.delete('/:id',authenticate, requireAdmin, deleteClient);
 
