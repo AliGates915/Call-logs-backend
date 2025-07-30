@@ -7,8 +7,7 @@ export const addStaff = async (req, res) => {
   try {
     const { name, department, designation, address, number, email, password } = req.body;
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 10);
+
 
     // Upload image to Cloudinary
     let image = {};
@@ -24,7 +23,7 @@ export const addStaff = async (req, res) => {
       address,
       number,
       email,
-      password: hashedPassword,
+      password,
       image,
     });
 
@@ -74,11 +73,6 @@ export const updateStaff = async (req, res) => {
       image = { url: result.secure_url, public_id: result.public_id };
     }
 
-    // Hash new password if provided
-    let hashedPassword = staff.password;
-    if (password) {
-      hashedPassword = await bcrypt.hash(password, 10);
-    }
 
     const updatedFields = {
       name: name ?? staff.name,
@@ -87,7 +81,7 @@ export const updateStaff = async (req, res) => {
       address: address ?? staff.address,
       number: number ?? staff.number,
       email: email ?? staff.email,
-      password: hashedPassword,
+      password,
       image,
     };
 
