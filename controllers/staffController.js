@@ -1,11 +1,10 @@
 import Staff from '../models/Staff.js';
-import bcrypt from 'bcryptjs';
 import { cloudinary } from '../config/cloudinary.js';
 
 // CREATE Staff
 export const addStaff = async (req, res) => {
   try {
-    const { name, department, designation, address, number, email, password } = req.body;
+    const { name, department, designation, address, number, email, password, role } = req.body;
 
 
 
@@ -23,6 +22,7 @@ export const addStaff = async (req, res) => {
       address,
       number,
       email,
+      role,
       password,
       image,
     });
@@ -38,6 +38,7 @@ export const addStaff = async (req, res) => {
 export const getAllStaff = async (req, res) => {
   try {
     const staff = await Staff.find().select('-password');
+    console.log(staff);
     res.status(200).json({ success: true, data: staff });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
@@ -58,7 +59,7 @@ export const getStaffById = async (req, res) => {
 // UPDATE Staff
 export const updateStaff = async (req, res) => {
   try {
-    const { name, department, designation, address, number, email, password } = req.body;
+    const { name, department, designation, address, number, email, password, role } = req.body;
     let staff = await Staff.findById(req.params.id);
     if (!staff) return res.status(404).json({ success: false, message: 'Staff not found' });
 
@@ -75,6 +76,7 @@ export const updateStaff = async (req, res) => {
 
 
     const updatedFields = {
+      role: role ?? staff.role,
       name: name ?? staff.name,
       department: department ?? staff.department,
       designation: designation ?? staff.designation,

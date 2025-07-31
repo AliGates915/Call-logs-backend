@@ -12,6 +12,8 @@ const staffSchema = new mongoose.Schema({
     url: String,
     public_id: String,  
   },
+  
+  role: { type: String, enum: "user" },
 }, { timestamps: true });
 
 const Staff = mongoose.model('Staff', staffSchema);
